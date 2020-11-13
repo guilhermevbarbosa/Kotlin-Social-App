@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "253782070526",
+    "firebase_url": "https://socialapp-eaa96.firebaseio.com",
+    "project_id": "socialapp-eaa96",
+    "storage_bucket": "socialapp-eaa96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253782070526:android:03cbaaf07d9806510c41af",
+        "android_client_info": {
+          "package_name": "com.example.socialapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253782070526-tjv1bcj24ojiopp6ip9ne62t4mlkbfv2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialapp",
+            "certificate_hash": "cd6e790b785e5fc2db9c3dc2620d7d6641fecd51"
+          }
+        },
+        {
+          "client_id": "253782070526-gg3kudvct9ddchenp1pdhspoedd0m2qf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOTQZR5bkX6sNLfmsG2EkeLqqttX1kets"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253782070526-gg3kudvct9ddchenp1pdhspoedd0m2qf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253782070526:android:fc927de5589e68500c41af",
+        "android_client_info": {
+          "package_name": "com.example.tsisocial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253782070526-tsnskhhlj9qtb6c0cedhtqc34qr05f6d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tsisocial",
+            "certificate_hash": "cd6e790b785e5fc2db9c3dc2620d7d6641fecd51"
+          }
+        },
+        {
+          "client_id": "253782070526-gg3kudvct9ddchenp1pdhspoedd0m2qf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOTQZR5bkX6sNLfmsG2EkeLqqttX1kets"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253782070526-gg3kudvct9ddchenp1pdhspoedd0m2qf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253782070526:android:e1d202372deeedbd0c41af",
+        "android_client_info": {
+          "package_name": "com.example.tsisocialapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253782070526-rusi0e22bj6c5ae34sq695efgnqfuhpu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tsisocialapp",
+            "certificate_hash": "cd6e790b785e5fc2db9c3dc2620d7d6641fecd51"
+          }
+        },
+        {
+          "client_id": "253782070526-gg3kudvct9ddchenp1pdhspoedd0m2qf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOTQZR5bkX6sNLfmsG2EkeLqqttX1kets"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253782070526-gg3kudvct9ddchenp1pdhspoedd0m2qf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

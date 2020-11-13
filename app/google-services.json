@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "516337207449",
+    "firebase_url": "https://socialapp-5b40b.firebaseio.com",
+    "project_id": "socialapp-5b40b",
+    "storage_bucket": "socialapp-5b40b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516337207449:android:1e2cc32fc8d7966f519008",
+        "android_client_info": {
+          "package_name": "com.example.tsisocialapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516337207449-qa8mcg0h0kh5bl3sjlf0h4m74b97dlmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANowlWIWFZUaQ5-2QMTzYnGWNsu0SmVmo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "516337207449-qa8mcg0h0kh5bl3sjlf0h4m74b97dlmi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
