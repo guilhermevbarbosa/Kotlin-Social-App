@@ -1,5 +1,6 @@
 package com.example.tsisocialapp.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -11,8 +12,12 @@ import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Category
 import com.example.tsisocialapp.services.CategoryService
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_home_page.*
+import kotlinx.android.synthetic.main.options_card.view.*
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.NumberFormat
+import java.util.*
 
 class HomePageFragment : Fragment() {
     override fun onCreateView(
@@ -44,11 +49,11 @@ class HomePageFragment : Fragment() {
                 response: Response<List<Category>>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(context, "Sucesso", Toast.LENGTH_LONG).show()
-                    Log.e("Categorias", response.body().toString())
+                    val categories = response.body()
+                    refreshUi(categories)
                 }
                 else {
-                    Toast.makeText(context, "Não foi possível recuperar categorias", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Não há categorias", Toast.LENGTH_LONG).show()
                     Log.e("ERRO", "Erro da API")
                 }
             }
@@ -60,6 +65,22 @@ class HomePageFragment : Fragment() {
         }
 
         call.enqueue(callback)
+    }
+
+    fun refreshUi(categories: List<Category>?){
+        categories?.let {
+            for (category in it){
+                val card = layoutInflater.inflate(R.layout.options_card, containerHome, false)
+
+                card.txtBtn.text = category.name
+
+                card.setOnClickListener {
+                    Log.e("click", "Fui clickado :)")
+                }
+
+                containerHome.addView(card)
+            }
+        }
     }
 
     companion object {
