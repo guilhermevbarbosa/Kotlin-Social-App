@@ -1,6 +1,6 @@
 package com.example.tsisocialapp.views.fragments
 
-import android.R.attr.data
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,19 +8,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Category
+import com.example.tsisocialapp.model.Post
 import com.example.tsisocialapp.services.CategoryService
+import com.example.tsisocialapp.utils.getCurrentUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.fragment_post.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-
+import java.time.LocalDateTime
 
 class PostFragment : Fragment() {
+    var database: DatabaseReference? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,9 +37,28 @@ class PostFragment : Fragment() {
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
+        configurarFirebase()
         getCategories()
+
+        btnSave.setOnClickListener {
+            val uid = getCurrentUser()?.uid
+            val currentTime = LocalDateTime.now()
+
+            val post = Post(
+                user_uid = uid!!,
+                timestamp = currentTime.toString(),
+                title = etTitulo.text.toString(),
+                text = etTexto.text.toString(),
+                category = spinnerFrag.selectedItem as String,
+                likes = 0
+            )
+
+            val novaEntrada = database?.push()
+            novaEntrada?.setValue(post)
+        }
     }
 
     fun getCategories(){
@@ -77,6 +103,10 @@ class PostFragment : Fragment() {
         }
 
         call.enqueue(callback)
+    }
+
+    fun configurarFirebase(){
+        database = FirebaseDatabase.getInstance().reference.child("posts")
     }
 
     companion object {
