@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface CategoryService {
 
-    @GET("/api/9294833f4be54b7ca0a2c01db6e730cf/categorias")
+    @GET("/api/260270692e294a38b21e52d0fce3dd76/categorias")
     fun list(): Call<List<Category>>
 }

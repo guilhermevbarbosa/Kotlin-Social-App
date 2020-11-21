@@ -7,5 +7,6 @@ data class Post (
     var title: String,
     var text: String,
     var category: String,
-    var likes: Int
+    var likes: Int,
+    var image: String? = null
 )

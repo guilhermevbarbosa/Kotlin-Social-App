@@ -1,7 +1,9 @@
 package com.example.tsisocialapp.views.fragments
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,21 +19,27 @@ import com.example.tsisocialapp.model.Category
 import com.example.tsisocialapp.model.Post
 import com.example.tsisocialapp.services.CategoryService
 import com.example.tsisocialapp.utils.getCurrentUser
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
+import com.google.firebase.storage.UploadTask
 import kotlinx.android.synthetic.main.fragment_post.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.time.LocalDateTime
 
 class PostFragment : Fragment() {
     var database: DatabaseReference? = null
     var storage: StorageReference? = null
+    var img: Uri? = null
 
     //image pick code
     private val IMAGE_PICK_CODE = 1000;
@@ -81,6 +89,8 @@ class PostFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             image_view.setImageURI(data?.data)
+            img = data?.data
+            uploadImage("teste")
         }
     }
 
@@ -134,6 +144,35 @@ class PostFragment : Fragment() {
 
     fun configurarFirebaseStorage(){
         storage = FirebaseStorage.getInstance().reference.child("posts")
+    }
+
+    fun uploadImage(nome: String){
+        val progressBar = ProgressDialog(context)
+        progressBar.setMessage("Salvando a imagem")
+        progressBar.show()
+
+        if (img != null){
+            val storageRef = storage!!.child(System.currentTimeMillis().toString())
+
+            var uploadTask: StorageTask<*>
+            uploadTask = storageRef.putFile(img!!)
+
+            uploadTask.continueWithTask(Continuation <UploadTask.TaskSnapshot, Task<Uri>>{ task ->
+                if (!task.isSuccessful){
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                return@Continuation storageRef.downloadUrl
+            }).addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    val downloadUrl = task.result
+                    val url = downloadUrl.toString()
+
+                    progressBar.dismiss()
+                }
+            }
+        }
     }
 
     companion object {
