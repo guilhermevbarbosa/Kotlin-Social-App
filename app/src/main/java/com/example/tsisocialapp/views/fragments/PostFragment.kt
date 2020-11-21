@@ -57,6 +57,8 @@ class PostFragment : Fragment() {
             )
 
             val novaEntrada = database?.push()
+
+            post.id = novaEntrada?.key
             novaEntrada?.setValue(post)
         }
     }
