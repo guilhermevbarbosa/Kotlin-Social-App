@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.example.tsisocialapp.MainActivity
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Category
 import com.example.tsisocialapp.model.Post
@@ -33,12 +34,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.File
 import java.time.LocalDateTime
 
 class PostFragment : Fragment() {
     var database: DatabaseReference? = null
     var storage: StorageReference? = null
+
     var img: Uri? = null
 
     //image pick code
@@ -67,22 +68,7 @@ class PostFragment : Fragment() {
         }
 
         btnSave.setOnClickListener {
-            val uid = getCurrentUser()?.uid
-            val currentTime = LocalDateTime.now()
-
-            val post = Post(
-                user_uid = uid!!,
-                timestamp = currentTime.toString(),
-                title = etTitulo.text.toString(),
-                text = etTexto.text.toString(),
-                category = spinnerFrag.selectedItem as String,
-                likes = 0
-            )
-
-            val novaEntrada = database?.push()
-
-            post.id = novaEntrada?.key
-            novaEntrada?.setValue(post)
+            uploadPost()
         }
     }
 
@@ -90,7 +76,6 @@ class PostFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
             image_view.setImageURI(data?.data)
             img = data?.data
-            uploadImage("teste")
         }
     }
 
@@ -146,9 +131,10 @@ class PostFragment : Fragment() {
         storage = FirebaseStorage.getInstance().reference.child("posts")
     }
 
-    fun uploadImage(nome: String){
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun uploadPost(){
         val progressBar = ProgressDialog(context)
-        progressBar.setMessage("Salvando a imagem")
+        progressBar.setMessage("Salvando Post")
         progressBar.show()
 
         if (img != null){
@@ -169,7 +155,30 @@ class PostFragment : Fragment() {
                     val downloadUrl = task.result
                     val url = downloadUrl.toString()
 
+                    val uid = getCurrentUser()?.uid
+                    val currentTime = LocalDateTime.now()
+
+                    val post = Post(
+                        user_uid = uid!!,
+                        timestamp = currentTime.toString(),
+                        title = etTitulo.text.toString(),
+                        text = etTexto.text.toString(),
+                        category = spinnerFrag.selectedItem as String,
+                        likes = 0,
+                        image = url
+                    )
+
+                    val novaEntrada = database?.push()
+
+                    post.id = novaEntrada?.key
+                    novaEntrada?.setValue(post)
+
                     progressBar.dismiss()
+
+                    activity?.let{
+                        val intent = Intent(it, MainActivity::class.java)
+                        it.startActivity(intent)
+                    }
                 }
             }
         }
