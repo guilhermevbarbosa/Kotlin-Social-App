@@ -1,5 +1,7 @@
 package com.example.tsisocialapp.views.fragments
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +19,8 @@ import com.example.tsisocialapp.services.CategoryService
 import com.example.tsisocialapp.utils.getCurrentUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.fragment_post.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,12 +31,18 @@ import java.time.LocalDateTime
 
 class PostFragment : Fragment() {
     var database: DatabaseReference? = null
+    var storage: StorageReference? = null
+
+    //image pick code
+    private val IMAGE_PICK_CODE = 1000;
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_post, container, false)
+        configurarFirebase()
+        configurarFirebaseStorage()
 
         return view
     }
@@ -40,8 +50,13 @@ class PostFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-        configurarFirebase()
         getCategories()
+
+        selectImg.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, IMAGE_PICK_CODE)
+        }
 
         btnSave.setOnClickListener {
             val uid = getCurrentUser()?.uid
@@ -60,6 +75,12 @@ class PostFragment : Fragment() {
 
             post.id = novaEntrada?.key
             novaEntrada?.setValue(post)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE){
+            image_view.setImageURI(data?.data)
         }
     }
 
@@ -109,6 +130,10 @@ class PostFragment : Fragment() {
 
     fun configurarFirebase(){
         database = FirebaseDatabase.getInstance().reference.child("posts")
+    }
+
+    fun configurarFirebaseStorage(){
+        storage = FirebaseStorage.getInstance().reference.child("posts")
     }
 
     companion object {
