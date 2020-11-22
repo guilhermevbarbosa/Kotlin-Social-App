@@ -1,5 +1,6 @@
 package com.example.tsisocialapp.views.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.tsisocialapp.R
+import com.example.tsisocialapp.views.activities.PostListActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.options_card.view.*
 
@@ -22,6 +24,7 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        linearContainer.removeAllViews()
 
         val posts = layoutInflater.inflate(R.layout.options_card, linearContainer, false)
         posts.txtBtn.text = "Meus Posts"
@@ -32,7 +35,10 @@ class ProfileFragment : Fragment() {
         linearContainer.addView(favoritos)
 
         posts.setOnClickListener {
-           Log.e("Click posts", "Posts")
+            activity?.let{
+                val intent = Intent(it, PostListActivity::class.java)
+                it.startActivity(intent)
+            }
         }
 
         favoritos.setOnClickListener {

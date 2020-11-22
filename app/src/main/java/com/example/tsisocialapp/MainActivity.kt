@@ -3,12 +3,9 @@ package com.example.tsisocialapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.example.tsisocialapp.utils.getCurrentUser
-import com.example.tsisocialapp.views.HomeActivity
+import com.example.tsisocialapp.views.activities.HomeActivity
 import com.firebase.ui.auth.AuthUI
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
