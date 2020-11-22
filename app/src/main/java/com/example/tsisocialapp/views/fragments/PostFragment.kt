@@ -68,7 +68,11 @@ class PostFragment : Fragment() {
         }
 
         btnSave.setOnClickListener {
-            uploadPost()
+            if(img != null){
+                uploadImage()
+            }else{
+                addPost()
+            }
         }
     }
 
@@ -132,9 +136,9 @@ class PostFragment : Fragment() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun uploadPost(){
+    fun uploadImage(){
         val progressBar = ProgressDialog(context)
-        progressBar.setMessage("Salvando Post")
+        progressBar.setMessage("Fazendo upload da imagem")
         progressBar.show()
 
         if (img != null){
@@ -154,33 +158,37 @@ class PostFragment : Fragment() {
                 if (task.isSuccessful){
                     val downloadUrl = task.result
                     val url = downloadUrl.toString()
-
-                    val uid = getCurrentUser()?.uid
-                    val currentTime = LocalDateTime.now()
-
-                    val post = Post(
-                        user_uid = uid!!,
-                        timestamp = currentTime.toString(),
-                        title = etTitulo.text.toString(),
-                        text = etTexto.text.toString(),
-                        category = spinnerFrag.selectedItem as String,
-                        likes = 0,
-                        image = url
-                    )
-
-                    val novaEntrada = database?.push()
-
-                    post.id = novaEntrada?.key
-                    novaEntrada?.setValue(post)
-
                     progressBar.dismiss()
 
-                    activity?.let{
-                        val intent = Intent(it, MainActivity::class.java)
-                        it.startActivity(intent)
-                    }
+                    addPost(url)
                 }
             }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addPost(imgUrl: String? = ""){
+        val uid = getCurrentUser()?.uid
+        val currentTime = LocalDateTime.now()
+
+        val post = Post(
+            user_uid = uid!!,
+            timestamp = currentTime.toString(),
+            title = etTitulo.text.toString(),
+            text = etTexto.text.toString(),
+            category = spinnerFrag.selectedItem as String,
+            likes = 0,
+            image = imgUrl
+        )
+
+        val novaEntrada = database?.push()
+
+        post.id = novaEntrada?.key
+        novaEntrada?.setValue(post)
+
+        activity?.let{
+            val intent = Intent(it, MainActivity::class.java)
+            it.startActivity(intent)
         }
     }
 
