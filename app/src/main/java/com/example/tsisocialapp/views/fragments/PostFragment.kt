@@ -179,10 +179,12 @@ class PostFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun addPost(imgUrl: String? = ""){
         val uid = getCurrentUser()?.uid
+        val email = getCurrentUser()?.email
         val currentTime = LocalDateTime.now()
 
         val post = Post(
             user_uid = uid!!,
+            user = email!!,
             timestamp = currentTime.toString(),
             title = etTitulo.text.toString(),
             text = etTexto.text.toString(),
