@@ -19,6 +19,7 @@ import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Category
 import com.example.tsisocialapp.model.Post
 import com.example.tsisocialapp.services.CategoryService
+import com.example.tsisocialapp.utils.alert
 import com.example.tsisocialapp.utils.getCurrentUser
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -68,6 +69,15 @@ class PostFragment : Fragment() {
         }
 
         btnSave.setOnClickListener {
+
+            if(etTitulo.text.isEmpty()){
+                return@setOnClickListener alert("Erro", "O campo título é inválido", context!!)
+            }
+
+            if(etTexto.text.isEmpty()){
+                return@setOnClickListener alert("Erro", "O campo texto é inválido", context!!)
+            }
+
             if(img != null){
                 uploadImage()
             }else{
