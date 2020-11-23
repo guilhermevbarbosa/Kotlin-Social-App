@@ -80,6 +80,8 @@ class HomePageFragment : Fragment() {
                 card.setOnClickListener {
                     activity?.let{
                         val intent = Intent(it, PostsInCategoryActivity::class.java)
+                        intent.putExtra("categoria", category.name)
+
                         it.startActivity(intent)
                     }
                 }

@@ -14,11 +14,14 @@ import kotlinx.android.synthetic.main.options_card.view.*
 
 class PostsInCategoryActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
+    var categoriaSelecionada: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_posts_in_category)
         configurarFirebase()
+
+        categoriaSelecionada = intent.getStringExtra("categoria")
     }
 
     fun configurarFirebase(){
@@ -44,8 +47,10 @@ class PostsInCategoryActivity : AppCompatActivity() {
         posts.forEach {
             val cardPost = layoutInflater.inflate(R.layout.options_card, containerAP, false)
 
-            cardPost.txtBtn.text = it.title
-            containerAP.addView(cardPost)
+            if (it.category == categoriaSelecionada){
+                cardPost.txtBtn.text = it.title
+                containerAP.addView(cardPost)
+            }
         }
     }
 }
