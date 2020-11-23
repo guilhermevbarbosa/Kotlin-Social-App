@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.tsisocialapp.R
-import com.example.tsisocialapp.views.activities.PostListActivity
+import com.example.tsisocialapp.views.activities.MyPostsActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.options_card.view.*
 
@@ -36,7 +36,7 @@ class ProfileFragment : Fragment() {
 
         posts.setOnClickListener {
             activity?.let{
-                val intent = Intent(it, PostListActivity::class.java)
+                val intent = Intent(it, MyPostsActivity::class.java)
                 it.startActivity(intent)
             }
         }

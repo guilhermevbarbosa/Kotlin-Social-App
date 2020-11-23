@@ -9,16 +9,15 @@ import com.example.tsisocialapp.model.Post
 import com.example.tsisocialapp.utils.convertSnapshotToPostList
 import com.example.tsisocialapp.utils.getCurrentUser
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_post_list.*
-import kotlinx.android.synthetic.main.options_card.*
+import kotlinx.android.synthetic.main.activity_posts_in_category.*
 import kotlinx.android.synthetic.main.options_card.view.*
 
-class PostListActivity : AppCompatActivity() {
+class PostsInCategoryActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post_list)
+        setContentView(R.layout.activity_posts_in_category)
         configurarFirebase()
     }
 
@@ -31,7 +30,7 @@ class PostListActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@PostListActivity, "Erro de servidor", Toast.LENGTH_LONG).show()
+                Toast.makeText(this@PostsInCategoryActivity, "Erro de servidor", Toast.LENGTH_LONG).show()
                 Log.e("PostListActivity", "configurarFirebase", error.toException())
             }
         }
@@ -40,17 +39,13 @@ class PostListActivity : AppCompatActivity() {
     }
 
     fun refreshUI(posts: List<Post>){
-        container.removeAllViews()
-
-        val uid = getCurrentUser()!!.uid
+        containerAP.removeAllViews()
 
         posts.forEach {
-            val cardPost = layoutInflater.inflate(R.layout.options_card, container, false)
+            val cardPost = layoutInflater.inflate(R.layout.options_card, containerAP, false)
 
-            if (it.user_uid == uid){
-                cardPost.txtBtn.text = it.title
-                container.addView(cardPost)
-            }
+            cardPost.txtBtn.text = it.title
+            containerAP.addView(cardPost)
         }
     }
 }

@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Category
 import com.example.tsisocialapp.services.CategoryService
+import com.example.tsisocialapp.views.activities.MyPostsActivity
+import com.example.tsisocialapp.views.activities.PostsInCategoryActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_home_page.*
 import kotlinx.android.synthetic.main.options_card.view.*
@@ -31,6 +33,7 @@ class HomePageFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        containerHome.removeAllViews()
 
         getCategories()
     }
@@ -75,7 +78,10 @@ class HomePageFragment : Fragment() {
                 card.txtBtn.text = category.name
 
                 card.setOnClickListener {
-                    Log.e("click", "Fui clickado :)")
+                    activity?.let{
+                        val intent = Intent(it, PostsInCategoryActivity::class.java)
+                        it.startActivity(intent)
+                    }
                 }
 
                 containerHome.addView(card)

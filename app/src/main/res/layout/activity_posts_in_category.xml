@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".views.activities.MyPostsActivity">
+    tools:context=".views.activities.PostsInCategoryActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/container"
+            android:id="@+id/containerAP"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
