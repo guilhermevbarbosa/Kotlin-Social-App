@@ -2,6 +2,7 @@ package com.example.tsisocialapp.utils
 
 import android.app.AlertDialog
 import android.content.Context
+import android.util.Log
 import com.example.tsisocialapp.model.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -44,4 +45,10 @@ fun convertSnapshotToPostList(snapshot: DataSnapshot): List<Post>{
     }
 
     return postsList
+}
+
+fun convertSnapshotToPost(snapshot: DataSnapshot){
+    snapshot.children.forEach {
+        Log.e("teste", it.toString())
+    }
 }

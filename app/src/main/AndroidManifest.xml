@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:parentActivityName=".views.activities.HomeActivity" android:name=".views.activities.PostsInCategoryActivity"></activity>
+        <activity android:name=".views.activities.PostActivity"></activity>
+        <activity
+            android:name=".views.activities.PostsInCategoryActivity"
+            android:parentActivityName=".views.activities.HomeActivity" />
         <activity
             android:name=".views.activities.MyPostsActivity"
             android:parentActivityName=".views.activities.HomeActivity" />
