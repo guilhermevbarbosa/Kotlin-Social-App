@@ -56,5 +56,9 @@ class PostActivity : AppCompatActivity() {
                 .error(R.drawable.ic_baseline_image_24)
                 .into(ivImage)
         }
+
+        likeBtn.setOnClickListener {
+            database?.child("likes")?.setValue(++post.likes)
+        }
     }
 }

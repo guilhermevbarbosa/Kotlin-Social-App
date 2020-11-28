@@ -59,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -76,6 +77,16 @@
                     android:layout_weight="1"
                     android:text="Curtidas"
                     android:textSize="16sp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/likeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:clickable="true"
+                    app:backgroundTint="#CC0606"
+                    app:srcCompat="@drawable/coracao2" />
 
             </LinearLayout>
 

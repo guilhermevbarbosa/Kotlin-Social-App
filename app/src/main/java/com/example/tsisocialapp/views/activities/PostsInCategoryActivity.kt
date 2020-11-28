@@ -51,11 +51,9 @@ class PostsInCategoryActivity : AppCompatActivity() {
             if (it.category == categoriaSelecionada){
                 cardPost.txtBtn.text = it.title
 
-                val idIt = it.id
-
-                cardPost.setOnClickListener {
+                cardPost.setOnClickListener { view ->
                     val intent = Intent(this, PostActivity::class.java)
-                    intent.putExtra("post", idIt)
+                    intent.putExtra("post", it.id)
 
                     startActivity(intent)
                 }
