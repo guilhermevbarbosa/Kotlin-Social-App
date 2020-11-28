@@ -56,10 +56,37 @@
                 android:text="Timestamp" />
 
             <LinearLayout
+                android:id="@+id/btnComment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/comm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    app:srcCompat="@drawable/ic_baseline_create_24" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="Deixar comentário"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
+                android:layout_weight="0"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -89,6 +116,13 @@
                     app:srcCompat="@drawable/coracao2" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/comentarios"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="100dp"
+                android:orientation="vertical" />
 
         </LinearLayout>
     </ScrollView>

@@ -1,15 +1,22 @@
 package com.example.tsisocialapp.views.activities
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
 import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import com.example.tsisocialapp.R
+import com.example.tsisocialapp.model.Comment
 import com.example.tsisocialapp.model.Post
 import com.example.tsisocialapp.utils.convertSnapshotToPost
+import com.example.tsisocialapp.utils.getCurrentUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_post.*
+import java.time.LocalDateTime
 
 class PostActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
@@ -41,6 +48,7 @@ class PostActivity : AppCompatActivity() {
         database?.addValueEventListener(vEvListener)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun refreshUI(post: Post){
         tvTitulo.text = post.title
         tvTexto.text = post.text
@@ -60,5 +68,34 @@ class PostActivity : AppCompatActivity() {
         likeBtn.setOnClickListener {
             database?.child("likes")?.setValue(++post.likes)
         }
+
+        btnComment.setOnClickListener {
+            novoComentario()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun novoComentario(){
+        val campoTexto = EditText(this)
+        campoTexto.hint = "Comentário"
+
+        val uid = getCurrentUser()?.uid
+        val email = getCurrentUser()?.email
+        val currentTime = LocalDateTime.now()
+
+        AlertDialog.Builder(this)
+            .setTitle("Comentário")
+            .setView(campoTexto)
+            .setPositiveButton("Inserir"){ dialog, button ->
+                val comentario = Comment(user_uid = uid.toString(), email = email.toString(), comment = campoTexto.text.toString(), timestamp = currentTime.toString())
+
+                val novaEntrada = database?.child("comentarios")?.push()
+                comentario.id = novaEntrada?.key
+
+                novaEntrada?.setValue(comentario)
+            }
+            .setNegativeButton("Cancelar", null)
+            .create()
+            .show()
     }
 }
