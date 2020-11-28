@@ -11,11 +11,14 @@ import androidx.appcompat.app.AlertDialog
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Comment
 import com.example.tsisocialapp.model.Post
+import com.example.tsisocialapp.utils.convertSnapshotToCommentList
 import com.example.tsisocialapp.utils.convertSnapshotToPost
 import com.example.tsisocialapp.utils.getCurrentUser
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_post.*
+import kotlinx.android.synthetic.main.activity_posts_in_category.*
+import kotlinx.android.synthetic.main.comentario_card.view.*
 import java.time.LocalDateTime
 
 class PostActivity : AppCompatActivity() {
@@ -28,12 +31,14 @@ class PostActivity : AppCompatActivity() {
         postSelecionado = intent.getStringExtra("post")
 
         configurarFirebase()
+        getComments()
     }
 
     private fun configurarFirebase(){
         database = FirebaseDatabase.getInstance().reference.child("posts").child(postSelecionado.toString())
 
         val vEvListener = object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onDataChange(snapshot: DataSnapshot) {
                 convertSnapshotToPost(snapshot)
                 refreshUI(convertSnapshotToPost(snapshot))
@@ -46,6 +51,39 @@ class PostActivity : AppCompatActivity() {
         }
 
         database?.addValueEventListener(vEvListener)
+    }
+
+    fun getComments(){
+        val commentNode = database?.child("comentarios")
+
+        val vEvListener = object : ValueEventListener {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onDataChange(snapshot: DataSnapshot) {
+                convertSnapshotToCommentList(snapshot)
+                refreshComments(convertSnapshotToCommentList(snapshot))
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@PostActivity, "Erro de servidor", Toast.LENGTH_LONG).show()
+                Log.e("PostListActivity", "configurarFirebase", error.toException())
+            }
+        }
+
+        commentNode?.addValueEventListener(vEvListener)
+    }
+
+    fun refreshComments(comments: List<Comment>){
+        comentarios.removeAllViews()
+
+        comments.forEach {
+            val card = layoutInflater.inflate(R.layout.comentario_card, comentarios, false)
+
+            card.txtUser.text = it.email
+            card.txtComment.text = it.comment
+            card.txtData.text = it.timestamp
+
+            comentarios.addView(card)
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

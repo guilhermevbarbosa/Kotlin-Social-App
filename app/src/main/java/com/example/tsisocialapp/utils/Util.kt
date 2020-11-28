@@ -3,6 +3,7 @@ package com.example.tsisocialapp.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
+import com.example.tsisocialapp.model.Comment
 import com.example.tsisocialapp.model.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -61,4 +62,23 @@ fun convertSnapshotToPost(snapshot: DataSnapshot): Post{
     val image = mapa.get("image") as String
 
     return Post(id, user_uid, user, timestamp, title, text, category, likes, image)
+}
+
+fun convertSnapshotToCommentList(snapshot: DataSnapshot): List<Comment>{
+    val commentList = arrayListOf<Comment>()
+
+    snapshot.children.forEach {
+        val mapa = it.getValue() as HashMap<String, Any>
+
+        val id = mapa.get("id") as String
+        val user_uid = mapa.get("user_uid") as String
+        val email = mapa.get("email") as String
+        val comment = mapa.get("comment") as String
+        val timestamp = mapa.get("timestamp") as String
+
+        val comments = Comment(id, user_uid, email, comment, timestamp)
+        commentList.add(comments)
+    }
+
+    return commentList
 }
