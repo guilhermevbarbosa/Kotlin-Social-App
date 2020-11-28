@@ -47,8 +47,18 @@ fun convertSnapshotToPostList(snapshot: DataSnapshot): List<Post>{
     return postsList
 }
 
-fun convertSnapshotToPost(snapshot: DataSnapshot){
-    snapshot.children.forEach {
-        Log.e("teste", it.toString())
-    }
+fun convertSnapshotToPost(snapshot: DataSnapshot): Post{
+    val mapa = snapshot.getValue() as HashMap<String, Any>
+
+    val id = mapa.get("id") as String
+    val user_uid = mapa.get("user_uid") as String
+    val user = mapa.get("user") as String
+    val timestamp = mapa.get("timestamp") as String
+    val title = mapa.get("title") as String
+    val text = mapa.get("text") as String
+    val category = mapa.get("category") as String
+    val likes = mapa.get("likes") as Long
+    val image = mapa.get("image") as String
+
+    return Post(id, user_uid, user, timestamp, title, text, category, likes, image)
 }

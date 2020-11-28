@@ -1,6 +1,5 @@
 package com.example.tsisocialapp.views.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +7,9 @@ import android.widget.Toast
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.model.Post
 import com.example.tsisocialapp.utils.convertSnapshotToPost
-import com.example.tsisocialapp.utils.convertSnapshotToPostList
-import com.example.tsisocialapp.utils.getCurrentUser
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_post_list.*
-import kotlinx.android.synthetic.main.options_card.view.*
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_post.*
 
 class PostActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
@@ -32,7 +29,7 @@ class PostActivity : AppCompatActivity() {
         val vEvListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 convertSnapshotToPost(snapshot)
-                //refreshUI(convertSnapshotToPost(snapshot))
+                refreshUI(convertSnapshotToPost(snapshot))
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -45,6 +42,19 @@ class PostActivity : AppCompatActivity() {
     }
 
     fun refreshUI(post: Post){
-        Log.e("post", post.toString())
+        tvTitulo.text = post.title
+        tvTexto.text = post.text
+        tvUserData.text = post.user
+        tvTimestamp.text = post.timestamp
+        tvLikes.text = post.likes.toString()
+
+        if (post.image!!.isNotEmpty()){
+            Picasso
+                .get()
+                .load(post.image)
+                .placeholder(R.drawable.ic_baseline_image_24)
+                .error(R.drawable.ic_baseline_image_24)
+                .into(ivImage)
+        }
     }
 }

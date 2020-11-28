@@ -49,6 +49,7 @@ class PostsInCategoryActivity : AppCompatActivity() {
 
             if (it.category == categoriaSelecionada){
                 cardPost.txtBtn.text = it.title
+
                 containerAP.addView(cardPost)
             }
         }
