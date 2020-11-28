@@ -1,5 +1,6 @@
 package com.example.tsisocialapp.views.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -49,6 +50,15 @@ class PostsInCategoryActivity : AppCompatActivity() {
 
             if (it.category == categoriaSelecionada){
                 cardPost.txtBtn.text = it.title
+
+                val idIt = it.id
+
+                cardPost.setOnClickListener {
+                    val intent = Intent(this, PostActivity::class.java)
+                    intent.putExtra("post", idIt)
+
+                    startActivity(intent)
+                }
 
                 containerAP.addView(cardPost)
             }
