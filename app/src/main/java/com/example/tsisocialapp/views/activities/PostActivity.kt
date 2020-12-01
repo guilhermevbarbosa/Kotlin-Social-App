@@ -4,6 +4,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -32,6 +34,22 @@ class PostActivity : AppCompatActivity() {
 
         configurarFirebase()
         getComments()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.favorite, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val id = item.itemId
+
+        if(id == R.id.favoriteBtn){
+            Log.e("teste", "io")
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     private fun configurarFirebase(){
