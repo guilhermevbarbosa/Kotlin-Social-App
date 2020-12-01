@@ -13,4 +13,7 @@ interface PostRoomDao {
 
     @Query(value = "select * from PostRoom")
     fun listarTodas(): List<PostRoom>
+
+    @Query("select * FROM PostRoom WHERE id IN (:postId)")
+    fun getOne(postId: String): PostRoom
 }

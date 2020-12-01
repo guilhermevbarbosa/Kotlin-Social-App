@@ -49,11 +49,10 @@ class MyPostsActivity : AppCompatActivity() {
 
             if (it.user_uid == uid){
                 cardPost.txtBtn.text = it.title
-                val postId = it.id
 
-                cardPost.setOnClickListener {
+                cardPost.setOnClickListener {post ->
                     val intent = Intent(this, PostActivity::class.java)
-                    intent.putExtra("post", postId)
+                    intent.putExtra("post", it.id)
 
                     startActivity(intent)
                 }

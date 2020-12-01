@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.views.activities.MyPostsActivity
+import com.example.tsisocialapp.views.activities.SavedPostsActivity
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.options_card.view.*
 
@@ -42,7 +43,10 @@ class ProfileFragment : Fragment() {
         }
 
         favoritos.setOnClickListener {
-            Log.e("Click favoritos", "Favoritos")
+            activity?.let{
+                val intent = Intent(it, SavedPostsActivity::class.java)
+                it.startActivity(intent)
+            }
         }
     }
 
