@@ -10,9 +10,12 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.room.Room
 import com.example.tsisocialapp.R
+import com.example.tsisocialapp.db.AppDatabase
 import com.example.tsisocialapp.model.Comment
 import com.example.tsisocialapp.model.Post
+import com.example.tsisocialapp.model.PostRoom
 import com.example.tsisocialapp.utils.convertSnapshotToCommentList
 import com.example.tsisocialapp.utils.convertSnapshotToPost
 import com.example.tsisocialapp.utils.getCurrentUser
@@ -26,6 +29,8 @@ import java.time.LocalDateTime
 class PostActivity : AppCompatActivity() {
     var database: DatabaseReference? = null
     var postSelecionado: String? = null
+
+    var actualPostToRoom: PostRoom? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +51,9 @@ class PostActivity : AppCompatActivity() {
         val id = item.itemId
 
         if(id == R.id.favoriteBtn){
-            Log.e("teste", "io")
+            Thread{
+                actualPostToRoom?.let { salvarPostOffline(it) }
+            }.start()
         }
 
         return super.onOptionsItemSelected(item)
@@ -128,6 +135,8 @@ class PostActivity : AppCompatActivity() {
         btnComment.setOnClickListener {
             novoComentario()
         }
+
+        actualPostToRoom = PostRoom(post.id!!, post.user, post.timestamp, post.title, post.text, post.category)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -153,5 +162,11 @@ class PostActivity : AppCompatActivity() {
             .setNegativeButton("Cancelar", null)
             .create()
             .show()
+    }
+
+    fun salvarPostOffline(post: PostRoom){
+        val db = Room.databaseBuilder(this, AppDatabase::class.java, "UserDb").build()
+
+        db.PostRoomDao().inserir(post)
     }
 }
