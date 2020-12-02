@@ -51,9 +51,7 @@ class PostActivity : AppCompatActivity() {
         val id = item.itemId
 
         if(id == R.id.favoriteBtn){
-            Thread{
-                actualPostToRoom?.let { salvarPostOffline(it) }
-            }.start()
+            salvarPostOffline(actualPostToRoom!!)
         }
 
         return super.onOptionsItemSelected(item)
@@ -164,9 +162,17 @@ class PostActivity : AppCompatActivity() {
             .show()
     }
 
-    fun salvarPostOffline(post: PostRoom){
-        val db = Room.databaseBuilder(this, AppDatabase::class.java, "UserDb").build()
+    private fun salvarPostOffline(post: PostRoom){
+        Thread{
+            val db = Room.databaseBuilder(this, AppDatabase::class.java, "UserDb").build()
 
-        db.PostRoomDao().inserir(post)
+            val count = db.PostRoomDao().countIfExists(post.id)
+
+            if(count == 0){
+                db.PostRoomDao().inserir(post)
+            }else{
+                db.PostRoomDao().deleteOne(post.id)
+            }
+        }.start()
     }
 }

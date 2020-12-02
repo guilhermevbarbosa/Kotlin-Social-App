@@ -17,6 +17,9 @@ interface PostRoomDao {
     @Query("select * FROM PostRoom WHERE id IN (:postId)")
     fun getOne(postId: String): PostRoom
 
+    @Query("select count(*) FROM PostRoom WHERE id IN (:postId)")
+    fun countIfExists(postId: String): Int
+
     @Query("delete FROM PostRoom WHERE id = :postId")
     fun deleteOne(postId: String)
 }
