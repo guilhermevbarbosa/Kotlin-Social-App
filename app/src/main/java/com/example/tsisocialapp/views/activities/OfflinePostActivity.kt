@@ -1,16 +1,12 @@
 package com.example.tsisocialapp.views.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.room.Room
 import com.example.tsisocialapp.R
 import com.example.tsisocialapp.db.AppDatabase
 import com.example.tsisocialapp.model.PostRoom
 import kotlinx.android.synthetic.main.activity_offline_post.*
-import kotlinx.android.synthetic.main.activity_saved_posts.*
-import kotlinx.android.synthetic.main.options_card.view.*
 
 class OfflinePostActivity : AppCompatActivity() {
     var postSelecionado: String? = null

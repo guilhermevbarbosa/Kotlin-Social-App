@@ -32,7 +32,7 @@ class ProfileFragment : Fragment() {
         linearContainer.addView(posts)
 
         val favoritos = layoutInflater.inflate(R.layout.options_card, linearContainer, false)
-        favoritos.txtBtn.text = "Meus Favoritos"
+        favoritos.txtBtn.text = "Posts Salvos"
         linearContainer.addView(favoritos)
 
         posts.setOnClickListener {

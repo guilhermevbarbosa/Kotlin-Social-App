@@ -170,9 +170,9 @@ class PostActivity : AppCompatActivity() {
 
             if(count == 0){
                 db.PostRoomDao().inserir(post)
-            }else{
-                db.PostRoomDao().deleteOne(post.id)
             }
         }.start()
+
+        Toast.makeText(this@PostActivity, "Post salvo offline com sucesso", Toast.LENGTH_SHORT).show()
     }
 }

@@ -60,7 +60,7 @@ class SavedPostsActivity : AppCompatActivity() {
                 deletarPostBD(it.id)
                 atualizarPostsBD()
 
-                Toast.makeText(this@SavedPostsActivity, "Desfavoritado com sucesso", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@SavedPostsActivity, "Excluido com sucesso", Toast.LENGTH_SHORT).show()
             }
 
             cardPost.setOnClickListener { post->
